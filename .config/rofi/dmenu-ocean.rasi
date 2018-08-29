@@ -1,0 +1,40 @@
+* {
+    background-color:	#cbd6e2;
+    text-color:		#223b54;
+    height:		38px;
+}
+
+configuration {
+}
+
+#window {
+    anchor:     north;
+    location:   north;
+    width:      100%;
+    padding:    9px;
+    children:   [ horibox ];
+}
+
+#horibox {
+    orientation: horizontal;
+    children:   [ prompt, entry, listview];
+}
+
+#listview {
+    layout:     horizontal;
+    spacing:    15px;
+    lines:      20;
+}
+
+#entry {
+    expand:     false;
+    width:      8em;
+}
+
+#element {
+    padding: 0px 3px;
+}
+#element selected {
+    background-color: #223b54;
+    color: #cbd6e2;
+}

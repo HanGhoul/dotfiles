@@ -1,0 +1,184 @@
+# Start Polybar
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+# Mod key = Windows key
+set $mod Mod4
+
+# $mod+Mouse to drag floating windows
+floating_modifier $mod
+
+# Disable window titlebars for i3-gaps to work
+for_window [class="^.*"] border pixel 1
+
+# Font for window titles.
+font Xft:Unifont 8
+
+# i3-gaps
+gaps inner 0
+gaps outer 0
+
+#--------
+# COLORS
+#--------
+set_from_resource $bg   background  #000000
+set_from_resource $fg   foreground  #000000
+set_from_resource $black0   color0  #000000
+set_from_resource $black1   color8  #000000
+set_from_resource $red0	    color1  #000000
+set_from_resource $red1     color9  #000000
+set_from_resource $green0   color2  #000000
+set_from_resource $green1   color10 #000000
+set_from_resource $yellow0  color3  #000000
+set_from_resource $yellow1  color11 #000000
+set_from_resource $blue0    color4  #000000
+set_from_resource $blue1    color12 #000000
+set_from_resource $magenta0 color5  #000000
+set_from_resource $magenta1 color13 #000000
+set_from_resource $cyan0    color6  #000000
+set_from_resource $cyan1    color14 #000000
+set_from_resource $white0   color7  #000000
+set_from_resource $white1   color15 #000000
+
+#			class		border		backgr.		text indicator
+client.focused		$yellow1	$yellow1	$blue0		$yellow1
+client.focused_inactive	$bg		$bg		$black1		$bg
+client.unfocused	$bg		$bg		$black1		$white0
+client.urgent		$red0		$red0		$red1		$white0
+
+#------------
+# WORKSPACES
+#------------
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $browser "1"
+set $term "2"
+set $mail "3"
+set $music "4"
+set $video "5"
+set $keepass "6"
+
+# switch to workspace
+bindsym $mod+1 workspace $browser
+bindsym $mod+2 workspace $term
+bindsym $mod+3 workspace $mail
+bindsym $mod+4 workspace $music
+bindsym $mod+5 workspace $video
+bindsym $mod+6 workspace $keepass
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $browser
+bindsym $mod+Shift+2 move container to workspace $term
+bindsym $mod+Shift+3 move container to workspace $mail
+bindsym $mod+Shift+4 move container to workspace $music
+bindsym $mod+Shift+5 move container to workspace $video
+bindsym $mod+Shift+6 move container to workspace $keepass
+
+# Start programs in their workspaces
+exec --no-startup-id firefox
+#exec --no-startup-id thunderbird
+
+#for_window [title="Mozilla Firefox"] move to workspace $browser
+#for_window [title="urxvt"] move to workspace $term
+#for_window [class="Thunderbird"] move to workspace $mail
+#for_window [class="Spotify"] move to workspace $music
+#for_window [class="mpv"] move to workspace $video fullscreen enable
+#for_window [title="KeePass"] move to workspace $keepass
+
+#----------
+# BINDINGS
+#----------
+
+# audio controls
+#bindsym XF86AudioRaiseVolume exec amixer sset 'Master' 5%+
+#bindsym XF86AudioLowerVolume exec amixer sset 'Master' 5%-
+#bindsym XF86AudioMute exec amixer sset 'Master' toggle
+bindsym XF86AudioRaiseVolume exec pulsemixer --change-volume +1
+bindsym XF86AudioLowerVolume exec pulsemixer --change-volume -1
+bindsym XF86AudioMute exec pulsemixer --toggle-mute
+
+# media player controls
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioNext exec playerctl next
+
+# screen brightness controls
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5
+bindsym XF86MonBrightnessUp exec xbacklight -inc 5
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start rofi
+bindsym $mod+d exec "rofi -show run -theme ~/.config/rofi/Paper.rasi -font 'Monaco 12'"
+
+# change focus
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# toggle fullscreen
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+#-----------
+# i3 SYSTEM
+#-----------
+
+# window resizing
+bindsym $mod+r mode "resize"
+
+mode "resize" {
+        # resize windows
+        bindsym Left resize shrink width 5 px or 5 ppt
+        bindsym Down resize grow height 5 px or 5 ppt
+        bindsym Up resize shrink height 5 px or 5 ppt
+        bindsym Right resize grow width 5 px or 5 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+#bindsym $mod+l exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+l exec "i3lock --blur=1 --ignore-empty-password --bar-indicator --bar-max-height=1 --bar-color=00000000"

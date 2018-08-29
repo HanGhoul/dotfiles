@@ -1,0 +1,40 @@
+! Fonts
+
+Xft.dpi:			96
+Xft.hinting:			true
+Xft.hintstyle:			hintsfull
+Xft.autohint:			true
+Xft.antialias:			true
+Xft.lcdfilter:			lcddefault
+Xft.rgba:			rgb
+
+! URxvt
+
+URxvt.imLocale:			de_DE.UTF-8
+URxvt.saveLines:		9999
+URxvt.scrollBar:		false
+URxvt.secondaryScroll:		true
+URxvt.perl-lib:			/usr/lib/URxvt/perl/
+URxvt.perl-ext-common:		default,matcher
+URxvt.visualBell:		true
+URxvt.cursorBlink:		true
+URxvt.buffered:			true
+URxvt.externalBorder:		6
+URxvt.internalBorder:		0
+;URxvt.font:			xft:Monaco:pixelsize=16
+;URxvt.font:			xft:Misc Tamzen:pixelsize=20:antialias=false
+URxvt.font:			xft:Misc Tamsyn:pixelsize=20:antialias=false
+URxvt.depth:			32
+
+! URxvt perl ext
+
+URxvt.matcher.button:		1
+URxvt.urlLauncher:		firefox
+URxvt.tabbed.font:		xft:Monaco:pixelsize=16
+URxvt.tabbed.saveLines:		1000
+URxvt.tabbed.scrollBar:		false
+URxvt.tabbed.tabbar-fg:		8
+URxvt.tabbed.tabbar-bg:		0
+URxvt.tabbed.tab-fg:		7
+URxvt.tabbed.tab-bg:		8
+URxvt.tabbed.secondaryScroll:	true
