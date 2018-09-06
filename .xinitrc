@@ -35,7 +35,7 @@ fi
 /usr/bin/compton -b
 /usr/bin/dbus-daemon --session --fork
 /usr/bin/pulseaudio –-start
-/usr/bin/xrdb -load ~/.config/Xresources/themes/base16/harmonic-dark
+/usr/bin/xrdb -load ~/.config/Xresources/themes/base16/dark/ocean
 /usr/bin/xrandr --dpi 96
 /bin/bash ~/.fehbg &
 

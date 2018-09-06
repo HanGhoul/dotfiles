@@ -19,18 +19,19 @@ URxvt.perl-ext-common:		default,matcher
 URxvt.visualBell:		true
 URxvt.cursorBlink:		true
 URxvt.buffered:			true
-URxvt.externalBorder:		6
+URxvt.externalBorder:		4
 URxvt.internalBorder:		0
-;URxvt.font:			xft:Monaco:pixelsize=16
+URxvt.font:			xft:Fira Code:pixelsize=17:antialias=true
+;URxvt.font:			xft:Monaco:pixelsize=16:antialias=true
 ;URxvt.font:			xft:Misc Tamzen:pixelsize=20:antialias=false
-URxvt.font:			xft:Misc Tamsyn:pixelsize=20:antialias=false
+;URxvt.font:			xft:Misc Tamsyn:pixelsize=17:antialias=false
 URxvt.depth:			32
 
 ! URxvt perl ext
 
 URxvt.matcher.button:		1
 URxvt.urlLauncher:		firefox
-URxvt.tabbed.font:		xft:Monaco:pixelsize=16
+URxvt.tabbed.font:		xft:Misc Tamsyn:pixelsize=20:antialias=false
 URxvt.tabbed.saveLines:		1000
 URxvt.tabbed.scrollBar:		false
 URxvt.tabbed.tabbar-fg:		8
