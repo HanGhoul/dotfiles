@@ -252,7 +252,7 @@ type = custom/script
 exec = ~/.config/polybar/scripts/bluetooth.sh
 interval = tail
 
-format = "  "
+format = " "
 format-background = ${colors.status-bg4}
 format-foreground = ${colors.status-ico}
 format-underline = ${self.format-background}
