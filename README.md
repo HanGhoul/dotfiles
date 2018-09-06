@@ -14,4 +14,4 @@
   - otf-fira-sans / otf-fira-mono
   - adobe-source-han-sans-*
 
-![alt text](https://raw.githubusercontent.com/HanGhoul/dotfiles/master/2018-09-06-151536_1920x1080_scrot.png "scrot")
+![alt text](https://raw.githubusercontent.com/HanGhoul/dotfiles/master/2018-09-06-215004_1920x1080_scrot.png "scrot")
