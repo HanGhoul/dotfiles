@@ -14,7 +14,7 @@ for_window [class="^.*"] border pixel 1
 font Xft:Unifont 8
 
 # i3-gaps
-gaps inner 0
+gaps inner 6
 gaps outer 0
 
 #--------
