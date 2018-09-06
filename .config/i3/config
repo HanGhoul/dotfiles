@@ -11,10 +11,10 @@ floating_modifier $mod
 for_window [class="^.*"] border pixel 1
 
 # Font for window titles.
-font Xft:Unifont 8
+font Xft:Fira Sans Book 13
 
 # i3-gaps
-gaps inner 6
+gaps inner 0
 gaps outer 0
 
 #--------
@@ -39,11 +39,11 @@ set_from_resource $cyan1    color14 #000000
 set_from_resource $white0   color7  #000000
 set_from_resource $white1   color15 #000000
 
-#			class		border		backgr.		text indicator
-client.focused		$yellow1	$yellow1	$blue0		$yellow1
-client.focused_inactive	$bg		$bg		$black1		$bg
-client.unfocused	$bg		$bg		$black1		$white0
-client.urgent		$red0		$red0		$red1		$white0
+# cupcake		class		border		bg		indicator
+client.focused		$blue0		$blue0		$bg		$blue0
+client.focused_inactive	$bg		$bg		$bg		$bg
+client.unfocused	$green1		$green1		$bg		$green1
+client.urgent		$red0		$red0		$bg		$red0
 
 #------------
 # WORKSPACES
@@ -75,12 +75,12 @@ bindsym $mod+Shift+5 move container to workspace $video
 bindsym $mod+Shift+6 move container to workspace $keepass
 
 # Start programs in their workspaces
-exec --no-startup-id firefox
+#exec --no-startup-id firefox
 #exec --no-startup-id thunderbird
 
-#for_window [title="Mozilla Firefox"] move to workspace $browser
+#for_window [title="Mozilla Firefox"] border none
+#for_window [class="Thunderbird"] border none
 #for_window [title="urxvt"] move to workspace $term
-#for_window [class="Thunderbird"] move to workspace $mail
 #for_window [class="Spotify"] move to workspace $music
 #for_window [class="mpv"] move to workspace $video fullscreen enable
 #for_window [title="KeePass"] move to workspace $keepass
@@ -113,7 +113,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # start rofi
-bindsym $mod+d exec "rofi -show run -theme ~/.config/rofi/Paper.rasi -font 'Monaco 12'"
+bindsym $mod+d exec "rofi -modi 'run,window' -show combi -theme ~/.config/rofi/dmenu-ocean.rasi -font 'Fira Sans 13'"
 
 # change focus
 bindsym $mod+Left focus left
@@ -137,8 +137,8 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
+#bindsym $mod+s layout stacking
+#bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
@@ -148,7 +148,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+#bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child

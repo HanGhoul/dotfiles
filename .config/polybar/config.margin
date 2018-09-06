@@ -1,0 +1,381 @@
+[colors]
+background =		${xrdb:background}
+foreground =		${xrdb:foreground}
+foreground-alt =	${xrdb:foreground}
+black0 =		${xrdb:color0}
+black1 =		${xrdb:color8}
+red0 =			${xrdb:color1}
+red1 =			${xrdb:color9}
+green0 =		${xrdb:color2}
+green1 =		${xrdb:color10}
+yellow0 =		${xrdb:color3}
+yellow1 =		${xrdb:color11}
+blue0 =			${xrdb:color4}
+blue1 =			${xrdb:color12}
+magenta0 =		${xrdb:color5}
+magenta1 =		${xrdb:color13}
+cyan0 =			${xrdb:color6}
+cyan1 =			${xrdb:color14}
+white0 =		${xrdb:color7}
+white1 =		${xrdb:color15}
+
+status-fg =		${colors.blue1}
+status-ico =		${colors.white1}
+
+[padding]
+arch =		1
+status =	1
+
+[bar/margin]
+bottom =		false
+width =			1
+height =		44
+background =		
+modules-center =	margin
+
+[bar/tray]
+override-redirect =	true
+locale =		de_DE.UTF-8
+bottom =		false
+fixed-center =		true
+width =			1908
+height =		22
+offset-x =		6
+offset-y =		6
+background =		${colors.yellow1}
+foreground =		${colors.foreground}
+border-size =		3
+border-color =		${colors.yellow1}
+;font-0 =		Misc Tamsyn:pixelsize=16:antialias=false;3
+font-0 =		chris2 sq:antialias=false;3
+font-1 =		Source Han Sans KR:pixelsize=13;3
+font-2 =		FontAwesome:pixelsize=11;2
+font-3 =		Wuncon Siji;2
+modules-left =		i3 xwindow
+modules-right =		wireguard openvpn pub-ip netusage-down netusage-up wlan bluetooth xbacklight volume system-usb-udev battery date
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+[settings]
+screenchange-reload = false
+
+
+
+;--------
+; margin
+;--------
+
+[module/margin]
+type = custom/script
+exec = printf ''
+format-background = ${colors.yellow1}
+
+
+
+;------
+; tray
+;------
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-default = ""
+
+; focused = Active workspace on focused monitor
+label-focused = %icon%
+label-focused-foreground = ${colors.black0}
+label-focused-background = ${colors.red0}
+label-focused-padding = ${padding.arch}
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %icon%
+label-unfocused-padding = ${self.label-focused-padding}
+label-unfocused-background = ${colors.black1}
+; visible = Active workspace on unfocused monitor
+label-visible = %icon%
+label-visible-padding = ${self.label-focused-padding
+; urgent = Workspace with urgency hint set
+label-urgent = %icon%
+label-urgent-background = ${colors.red0}
+label-urgent-padding = ${self.label-focused-padding}
+; mode = Status, like resize
+label-mode-foreground = ${colors.black0}
+label-mode-background = ${colors.blue0}
+label-mode-padding = ${self.label-focused-padding}
+
+scroll-up =		i3wm-wsnext
+scroll-down =		i3wm-wsprev
+
+[module/xwindow]
+type = internal/xwindow
+format = <label>
+label = %title:0:70:..%
+format-prefix-foreground = ${colors.foreground-alt}
+format-padding = ${padding.arch}
+label-empty =
+
+[module/system-usb-udev]
+type = custom/script
+exec = ~/.config/polybar/scripts/system-usb-udev.sh
+tail = true
+format-prefix-foreground = ${colors.foreground-alt}
+format-background = ${colors.background}
+format-padding = ${padding.arch}
+click-left = ~/.config/polybar/scripts/system-usb-udev.sh --mount
+click-right = ~/.config/polybar/scripts/system-usb-udev.sh --unmount
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 99
+
+format-full-prefix = ""
+
+format-charging = <animation-charging> <label-charging>
+format-charging-padding = ${padding.arch}
+
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-padding = ${padding.arch}
+
+ramp-capacity-0 = ""
+ramp-capacity-0-foreground = ${colors.cyan1}
+ramp-capacity-1 = ""
+ramp-capacity-1-foreground = ${colors.red0}
+ramp-capacity-2 = ""
+ramp-capacity-2-foreground = ${colors.red1}
+ramp-capacity-3 = ""
+ramp-capacity-3-foreground = ${colors.green0}
+ramp-capacity-4 = ""
+ramp-capacity-4-foreground = ${colors.green0}
+
+animation-charging-0 = ""
+animation-charging-1 = ""
+animation-charging-2 = ""
+animation-charging-3 = ""
+animation-charging-4 = ""
+animation-charging-foreground = ${colors.green0}
+animation-charging-framerate = 750
+
+[module/date]
+type = custom/script
+exec = date +'%-d. %B, %H:%M Uhr'
+format-foreground = ${colors.foreground}
+format-background = ${colors.black1}
+format-padding = ${padding.arch}
+format-prefix = " "
+format-prefix-foreground = ${colors.status-ico}
+interval = 60
+
+[module/powermenu]
+type = custom/menu
+
+expand-right = false
+
+format-padding = ${padding.arch}
+format-background = ${colors.red0}
+
+; shutdown icon
+label-open = ""
+label-open-foreground = ${colors.black0}
+; arrow icon
+label-close = "   "
+label-close-foreground = ${colors.black0}
+
+label-separator =
+
+; logout
+menu-0-0 = "  "
+menu-0-0-foreground = ${colors.black0}
+menu-0-0-exec = i3-msg exit
+; reboot
+menu-0-1 = "  "
+menu-0-1-foreground = ${colors.black0}
+menu-0-1-exec = systemctl reboot
+; shutdown
+menu-0-2 = "  "
+menu-0-2-foreground = ${colors.black0}
+menu-0-2-exec = systemctl poweroff
+
+[module/player-prev]
+type = custom/text
+content = 
+click-left = exec playerctl previous
+
+[module/player-next]
+type = custom/text
+content = 
+click-left = exec playerctl next
+
+[module/pulseaudio]
+type = internal/pulseaudio
+sink = alsa_output.pci-0000_00_1f.3.analog-stereo
+use-ui-max = true
+format-volume = <ramp-volume> <label-volume>
+label-muted = 🔇 muted
+label-muted-foreground = #666
+ramp-volume-0 = 🔈
+ramp-volume-1 = 🔉
+ramp-volume-2 = 🔊
+scroll-up = exec pulsemixer --change-volume +1
+scroll-down = exec pulsemixer --change-volume -1
+click-left = exec pulsemixer --toggle-mute
+
+[module/volume]
+type = internal/alsa
+
+label = %percentage%%
+format-volume = <ramp-volume> <label-volume>
+format-volume-padding = ${padding.status}
+label-muted = ""
+label-muted-foreground = ${colors.yellow1}
+label-muted-padding = ${padding.status}
+
+ramp-volume-0 = ""
+ramp-volume-1 = ""
+ramp-volume-2 = ""
+ramp-volume-3 = ""
+ramp-volume-4 = ""
+ramp-volume-5 = ""
+ramp-volume-6 = ""
+ramp-volume-7 = ""
+ramp-volume-foreground = ${colors.status-ico}
+
+bar-volume-width = 10
+bar-volume-gradient = false
+bar-volume-indicator = 
+bar-volume-fill = ─
+bar-volume-empty = ─
+bar-volume-empty-foreground = ${colors.black1}
+
+scroll-up =		exec amixer sset 'Master' 1%+
+scroll-down =		exec amixer sset 'Master' 1%-
+
+[module/spotify]
+type = custom/script
+exec-if = pgrep spotify
+exec = ~/.config/polybar/scripts/sptfy-playing.sh
+tail = true
+click-left = exec playerctl play-pause
+format-background = ${colors.status-1}
+format-padding = ${padding.status}
+
+[module/xbacklight]
+type = internal/xbacklight
+label = %percentage%%
+format = <label>
+format-padding = ${padding.status}
+format-prefix = " "
+format-prefix-foreground = ${colors.status-ico}
+bar-width = 10
+bar-indicator = 
+bar-fill = ─
+bar-empty = ─
+bar-empty-foreground = ${colors.black1}
+enable-scroll = true
+scroll-up =		exec xbacklight -inc 1
+scroll-down =		exec xbacklight -dec 1
+
+[module/bluetooth]
+type = custom/script
+exec = ~/.config/polybar/scripts/bluetooth.sh
+interval #= 10
+format-padding = ${padding.arch}
+click-left = exec bluetoothctl connect 08\:DF\:1F\:B7\:33\:18
+click-right = exec bluetoothctl disconnect 08\:DF\:1F\:B7\:33\:18
+
+[module/openvpn]
+type = custom/script
+exec = pgrep openvpn
+interval = 5
+label = OpenVPN
+format-prefix = " "
+format-prefix-foreground = ${colors.status-ico}
+format-padding = ${padding.status}
+
+[module/wireguard]
+type = custom/script
+exec = ls -a ~ | grep .wrgrd
+interval = 5
+label = WireGuard
+format-prefix = " "
+format-prefix-foreground = ${colors.status-ico}
+format-padding = ${padding.status}
+
+[module/pub-ip]
+type = custom/script
+exec-if = ip a s wlp2s0 | grep global
+exec = ~/.config/polybar/scripts/pub-ip.sh
+interval = 30
+label = %output%
+format-prefix = " "
+format-prefix-foreground = ${colors.status-ico}
+format-padding = 1
+
+[module/wlan]
+type = internal/network
+interface = wlp2s0
+interval = 30.0
+
+format-connected = <ramp-signal> <label-connected>
+format-connected-padding = ${padding.status}
+label-connected = "%essid%"
+
+format-disconnected = <label-disconnected>
+format-disconnected-padding = 1
+format-disconnected-foreground = ${colors.red0}
+label-disconnected = " %ifname%"
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-foreground = ${colors.status-ico}
+
+[module/netusage-up]
+type = internal/network
+interface = wlp2s0
+tail = true
+label-disconnected= 
+label-connected = "%upspeed:8%"
+format-connected = <label-connected>
+format-connected-prefix = ""
+format-connected-prefix-foreground = ${colors.status-ico}
+format-connected-padding = ${padding.status}
+
+[module/netusage-down]
+type = internal/network
+interface = wlp2s0
+tail = true
+label-disconnected= 
+label-connected = "%downspeed:8%"
+format-connected = <label-connected>
+format-connected-prefix = ""
+format-connected-prefix-foreground = ${colors.status-ico}
+format-connected-padding = ${padding.status}
+
+
+;--------
+; unused
+;--------
+
+[module/eth]
+type = internal/network
+interface = enp4s0f1
+interval = 3.0
+
+format-connected-underline = #55aa55
+format-connected-prefix = " "
+label-connected = %local_ip%
+
+format-disconnected = <label-disconnected>
+format-disconnected-underline = ${self.format-connected-underline}
+label-disconnected =  %ifname%

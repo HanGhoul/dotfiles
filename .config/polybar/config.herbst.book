@@ -18,15 +18,20 @@ cyan1 =			${xrdb:color14}
 white0 =		${xrdb:color7}
 white1 =		${xrdb:color15}
 
-status-ico =		${colors.foreground}
-status-bg1 =		
-status-bg2 =		
-status-bg3 =		
-status-bg4 =		
-status-bg5 =		
-status-bg6 =		
-status-bg7 =		
-status-bg8 =		
+;border=			${colors.white1}
+;status-infofg =		${colors.black1}
+border=			#99fbf1f2
+status-infofg =		${colors.magenta1}
+status-infobg =		${self.border}
+status-ico =		${colors.background}
+status-bg1 =		${colors.green0}
+status-bg2 =		${colors.red0}
+status-bg3 =		${colors.cyan0}
+status-bg4 =		${colors.blue0}
+status-bg5 =		${colors.yellow0}
+status-bg6 =		${colors.blue1}
+status-bg7 =		${colors.magenta0}
+status-bg8 =		${colors.black1}
 
 [bar/tray]
 locale =		de_DE.UTF-8
@@ -34,22 +39,21 @@ bottom =		false
 fixed-center =		true
 width =			100%
 height =		31
-;background =		#22000000
-background =		#11ffffff
+background =		#22000000
+;background =		${colors:background}
 foreground =		${colors.foreground}
 border-size =		8
-border-top-size =	6
-border-bottom-size =	6
 border-color =		${self.background}
-underline-size =	0
-font-0 =		Fira Sans:pixelsize=14;antialias=true;3
-font-1 =		Source Han Sans KR:pixelsize=14;3
-font-2 =		Material Icons:pixelsize=15;5
-font-3 =                Wuncon Siji;3
-separator =		
-module-margin =		1
-modules-left =		i3 spotify
-modules-right =		netusage pub-ip wireguard openvpn wlan bluetooth volume xbacklight system-usb-udev battery date
+underline-size =	2
+font-0 =		Fira Sans Book:pixelsize=13;antialias=true;3
+font-1 =		Fira Mono:pixelsize=12;antialias=true;3
+font-2 =		Source Han Sans KR:pixelsize=13;3
+font-3 =		FontAwesome:pixelsize=11;2
+font-4 =                Wuncon Siji;3
+separator =		" "
+module-margin =		0
+modules-left =		i3 xwindow spotify
+modules-right =		netusage-up netusage-down pub-ip wireguard openvpn wlan bluetooth xbacklight volume system-usb-udev battery date
 
 [global/wm]
 margin-top = 0
@@ -89,20 +93,19 @@ ws-icon-default = "    "
 
 ; focused = Active workspace on focused monitor
 label-focused = %icon%
-label-focused-foreground = ${colors.status-ico}
-label-focused-background = ${colors.green1}
+label-focused-foreground = ${colors.black0}
+label-focused-background = ${colors.red0}
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %icon%
-label-unfocused-background = 
-label-unfocused-foreground = ${colors.green1}
+label-unfocused-background = ${colors.black1}
 label-unfocused-underline = ${self.label-focused-background}
 ; visible = Active workspace on unfocused monitor
 label-visible = %icon%
 ; urgent = Workspace with urgency hint set
 label-urgent = %icon%
-label-urgent-background = ${colors.red0}
-label-urgent-foreground = ${colors.status-ico}
+label-urgent-background = ${colors.yellow0}
+label-urgent-foreground = ${colors.white1}
 ; mode = Status, like resize
 label-mode = "  resize  "
 label-mode-background = ${colors.blue0}
@@ -114,12 +117,12 @@ scroll-down =		i3wm-wsprev
 [module/xwindow]
 type = internal/xwindow
 format = <label>
-label = "%title:0:70:..%  "
+label = "  %title:0:70:..%  "
 label-empty =
-label-background = ${self.format-prefix-background}
-label-foreground = ${colors.status-ico}
+label-background = ${colors.status-infobg}
+label-foreground = ${colors.status-infofg}
 
-format-prefix = "   "
+format-prefix = "    "
 format-prefix-background = ${colors.status-bg6}
 format-prefix-foreground = ${colors.status-ico}
 format-underline = ${self.format-prefix-background}
@@ -128,10 +131,10 @@ format-underline = ${self.format-prefix-background}
 type = custom/script
 exec = ~/.config/polybar/scripts/system-usb-udev.sh
 tail = true
+format-prefix-foreground = ${colors.status-ico}
+format-background = ${colors.background}
 click-left = ~/.config/polybar/scripts/system-usb-udev.sh --mount
 click-right = ~/.config/polybar/scripts/system-usb-udev.sh --unmount
-format-foreground = ${colors.status-ico}
-format-background = ${colors.status-bg1}
 
 [module/powermenu]
 type = custom/menu
@@ -174,20 +177,47 @@ click-left = exec playerctl next
 
 [module/spotify]
 type = custom/script
-exec = if [[ "$(playerctl status)" = "Connection to player failed: No players found" ]]; then echo -n ""; elif [[ "$(playerctl status)" = "Playing" ]]; then echo -n "  "; playerctl metadata xesam:artist; echo -n " – "; playerctl metadata xesam:title; else echo -n "  "; playerctl metadata xesam:artist; echo -n " – "; playerctl metadata xesam:title; fi
-exec-if = [[ "$(playerctl status)" = "Playing" || "$(playerctl status)" = "Paused" ]] && echo "0"
-interval = 1
-click-left = playerctl play-pause
+exec-if = pgrep spotify
+exec = ~/.config/polybar/scripts/sptfy-playing.sh
+tail = true
+label = " %output% "
+label-background = ${colors.status-infobg}
+label-foreground = ${colors.status-infofg}
+format-prefix = "    "
+format-prefix-background = ${colors.status-bg1}
+format-prefix-foreground = ${colors.status-ico}
+format-underline = ${self.format-prefix-background}
+click-left = exec playerctl play-pause
 
-[module/netusage]
+[module/netusage-up]
 type = internal/network
 interface = wlp2s0
 tail = true
 label-disconnected= 
-label-connected = " %upspeed:8%  %downspeed:8% "
-label-connected-background = ${colors.status-bg2}
-label-connected-foreground = ${colors.status-ico}
+label-connected = "%upspeed:8% "
+label-connected-background = ${colors.status-infobg}
+label-connected-foreground = ${colors.status-infofg}
+label-connected-font = 2
 format-connected = <label-connected>
+format-connected-prefix = "    "
+format-connected-prefix-background = ${colors.status-bg2}
+format-connected-prefix-foreground = ${colors.status-ico}
+format-connected-underline = ${self.format-connected-prefix-background}
+
+[module/netusage-down]
+type = internal/network
+interface = wlp2s0
+tail = true
+label-disconnected= 
+label-connected = "%downspeed:8% "
+label-connected-background = ${colors.status-infobg}
+label-connected-foreground = ${colors.status-infofg}
+label-connected-font = 2
+format-connected = <label-connected>
+format-connected-prefix = "    "
+format-connected-prefix-background = ${colors.status-bg2}
+format-connected-prefix-foreground = ${colors.status-ico}
+format-connected-underline = ${self.format-connected-prefix-background}
 
 [module/pub-ip]
 type = custom/script
@@ -195,10 +225,11 @@ exec-if = ip a s wlp2s0 | grep global
 exec = ~/.config/polybar/scripts/pub-ip.sh
 interval = 30
 label = " %output% "
-label-background = ${self.format-prefix-background}
-label-foreground = ${colors.status-ico}
-format-prefix = " "
-format-prefix-background = ${colors.status-bg3}
+label-font = 2
+label-background = ${colors.status-infobg}
+label-foreground = ${colors.status-infofg}
+format-prefix = "    "
+format-prefix-background = ${colors.status-bg1}
 format-prefix-foreground = ${colors.status-ico}
 format-underline = ${self.format-prefix-background}
 
@@ -206,10 +237,10 @@ format-underline = ${self.format-prefix-background}
 type = custom/script
 exec = ls -a ~ | grep .wrgrd
 interval = 5
-label = " WireGuard "
-label-background = ${self.format-prefix-background}
-label-foreground = ${colors.status-ico}
-format-prefix = " "
+label = "  WireGuard  "
+label-background = ${colors.status-infobg}
+label-foreground = ${colors.status-infofg}
+format-prefix = "    "
 format-prefix-background = ${colors.status-bg3}
 format-prefix-foreground = ${colors.status-ico}
 format-underline = ${self.format-prefix-background}
@@ -218,10 +249,10 @@ format-underline = ${self.format-prefix-background}
 type = custom/script
 exec = pgrep openvpn
 interval = 5
-label = " OpenVPN "
-label-background = ${self.format-prefix-background}
-label-foreground = ${colors.status-ico}
-format-prefix = " "
+label = "  OpenVPN  "
+label-background = ${colors.status-infobg}
+label-foreground = ${colors.status-infofg}
+format-prefix = "    "
 format-prefix-background = ${colors.status-bg3}
 format-prefix-foreground = ${colors.status-ico}
 format-underline = ${self.format-prefix-background}
@@ -229,10 +260,9 @@ format-underline = ${self.format-prefix-background}
 [module/wlan]
 type = internal/network
 interface = wlp2s0
-interval = 5
+interval = 30.0
 
-;format-connected = <ramp-signal><label-connected>
-format-connected = <ramp-signal>
+format-connected = <ramp-signal><label-connected>
 format-connected-underline = ${self.ramp-signal-background}
 label-connected = "  %essid%  "
 label-connected-background = ${colors.status-infobg}
@@ -241,21 +271,27 @@ label-connected-foreground = ${colors.status-infofg}
 format-disconnected = <label-disconnected>
 format-disconnected-foreground = ${colors.red0}
 format-disconnected-underline = ${self.ramp-signal-background}
-label-disconnected = "  "
+label-disconnected =
+label-disconnected-background = ${colors.status-infobg}
+label-disconnected-foreground = ${colors.status-infofg}
 
-ramp-signal-0 = " "
+ramp-signal-0 = "    "
 ramp-signal-background = ${colors.status-bg3}
 ramp-signal-foreground = ${colors.status-ico}
 
 [module/bluetooth]
 type = custom/script
 exec = ~/.config/polybar/scripts/bluetooth.sh
-interval = tail
+interval = 10
+label = "  %output%  "
+label-background = ${colors.status-infobg}
+label-foreground = ${colors.status-infofg}
 
-format = "  "
-format-background = ${colors.status-bg4}
-format-foreground = ${colors.status-ico}
-format-underline = ${self.format-background}
+;format-prefix = "    "
+format-prefix = "    "
+format-prefix-background = ${colors.status-bg4}
+format-prefix-foreground = ${colors.status-ico}
+format-underline = ${self.format-prefix-background}
 
 click-left = exec bluetoothctl connect 08\:DF\:1F\:B7\:33\:18
 click-right = exec bluetoothctl disconnect 08\:DF\:1F\:B7\:33\:18
@@ -265,12 +301,12 @@ type = internal/xbacklight
 
 format = <label>
 format-underline = ${self.format-prefix-background}
-label = " %percentage% "
+label = "  %percentage%%  "
 
-format-background = ${self.format-prefix-background}
-format-foreground = ${colors.status-ico}
+format-background = ${colors.status-infobg}
+format-foreground = ${colors.status-infofg}
 
-format-prefix = " "
+format-prefix = "    "
 format-prefix-background = ${colors.status-bg5}
 format-prefix-foreground = ${colors.status-ico}
 
@@ -284,24 +320,28 @@ type = internal/alsa
 format-volume = <ramp-volume><label-volume>
 format-volume-underline = ${self.ramp-volume-background}
 
-label-volume = " %percentage% "
-label-volume-background = ${self.ramp-volume-background}
-label-volume-foreground = ${colors.status-ico}
+label-volume = "  %percentage%%  "
+label-volume-background = ${colors.status-infobg}
+label-volume-foreground = ${colors.status-infofg}
 
-label-muted = " "
-label-muted-background = ${self.ramp-volume-background}
-label-muted-foreground = ${colors.status-ico}
+label-muted = "  mute  "
+label-muted-background = ${colors.status-infobg}
+label-muted-foreground = ${colors.status-infofg}
 
-ramp-volume-0 = " "
-ramp-volume-1 = " "
-ramp-volume-2 = " "
-ramp-volume-3 = " "
-ramp-volume-4 = " "
-ramp-volume-5 = " "
-ramp-volume-6 = " "
-ramp-volume-7 = " "
+ramp-volume-0 = "    "
+ramp-volume-1 = "    "
+ramp-volume-2 = "    "
+ramp-volume-3 = "    "
+ramp-volume-4 = "    "
+ramp-volume-5 = "    "
+ramp-volume-6 = "    "
+ramp-volume-7 = "    "
 ramp-volume-foreground = ${colors.status-ico}
 ramp-volume-background = ${colors.status-bg5}
+
+format-muted-prefix = "    "
+format-muted-prefix-background = ${colors.status-bg5}
+format-muted-prefix-foreground = ${colors.status-ico}
 
 scroll-up =		exec amixer sset 'Master' 1%+
 scroll-down =		exec amixer sset 'Master' 1%-
@@ -312,31 +352,25 @@ battery = BAT0
 adapter = AC
 full-at = 99
 
-format-full-prefix = " "
+format-full-prefix = "    "
 
 format-charging = <animation-charging><label-charging>
 format-charging-underline = ${self.ramp-capacity-background}
-label-charging = "%percentage% "
-label-charging-background = ${self.ramp-capacity-background}
-label-charging-foreground = ${colors.status-ico}
+label-charging = "  %percentage%%  "
+label-charging-background = ${colors.status-infobg}
+label-charging-foreground = ${colors.status-infofg}
 
 format-discharging = <ramp-capacity><label-discharging>
 format-discharging-underline = ${self.ramp-capacity-background}
-label-discharging = "%percentage% "
-label-discharging-background = ${self.ramp-capacity-background}
-label-discharging-foreground = ${colors.status-ico}
+label-discharging = "  %percentage%%  "
+label-discharging-background = ${colors.status-infobg}
+label-discharging-foreground = ${colors.status-infofg}
 
-animation-charging-0 = " "
-animation-charging-1 = " "
-animation-charging-background = ${self.ramp-capacity-background}
-animation-charging-foreground = ${self.ramp-capacity-foreground}
-animation-charging-framerate = 750
-
-ramp-capacity-0 = " "
-ramp-capacity-1 = " "
-ramp-capacity-2 = " "
-ramp-capacity-3 = " "
-ramp-capacity-4 = " "
+ramp-capacity-0 = "    "
+ramp-capacity-1 = "    "
+ramp-capacity-2 = "    "
+ramp-capacity-3 = "    "
+ramp-capacity-4 = "    "
 ramp-capacity-background = ${colors.status-bg7}
 ramp-capacity-foreground = ${colors.status-ico}
 ;ramp-capacity-0-foreground = ${colors.cyan1}
@@ -345,14 +379,23 @@ ramp-capacity-foreground = ${colors.status-ico}
 ;ramp-capacity-3-foreground = ${colors.green0}
 ;ramp-capacity-4-foreground = ${colors.green0}
 
+animation-charging-0 = "     "
+animation-charging-1 = "     "
+animation-charging-2 = "     "
+animation-charging-3 = "     "
+animation-charging-4 = "     "
+animation-charging-background = ${colors.status-bg7}
+animation-charging-foreground = ${colors.status-ico}
+animation-charging-framerate = 750
+
 [module/date]
 type = custom/script
 exec = date +'%-d. %B, %H:%M Uhr'
-label = " %output% "
-label-background = ${self.format-prefix-background}
-label-foreground = ${colors.status-ico}
+label = "  %output%  "
+label-background = ${colors.status-infobg}
+label-foreground = ${colors.status-infofg}
 
-format-prefix = " "
+format-prefix = "    "
 format-prefix-background = ${colors.status-bg6}
 format-prefix-foreground = ${colors.status-ico}
 format-underline = ${self.format-prefix-background}
