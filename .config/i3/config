@@ -84,6 +84,7 @@ bindsym $mod+Shift+6 move container to workspace $keepass
 #for_window [class="Spotify"] move to workspace $music
 #for_window [class="mpv"] move to workspace $video fullscreen enable
 #for_window [title="KeePass"] move to workspace $keepass
+for_window [class="Yad"] floating enable
 
 #----------
 # BINDINGS

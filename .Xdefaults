@@ -26,6 +26,8 @@ URxvt.font:			xft:Fira Code:pixelsize=17:antialias=true
 ;URxvt.font:			xft:Misc Tamzen:pixelsize=20:antialias=false
 ;URxvt.font:			xft:Misc Tamsyn:pixelsize=17:antialias=false
 URxvt.depth:			32
+URxvt.fading:			33
+URxvt.fadeColor			#000000
 
 ! URxvt perl ext
 

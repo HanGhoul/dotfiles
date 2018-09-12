@@ -22,20 +22,22 @@ white1 =		${xrdb:color15}
 locale =		de_DE.UTF-8
 bottom =		false
 width =			100%
-height =		31
+height =		28
 background =		#11ffffff
 foreground =		${colors.foreground}
 border-size =		8
 border-top-size =	6
 border-bottom-size =	6
 border-color =		${self.background}
-font-0 =		Fira Sans:pixelsize=14;antialias=true;3
+;font-0 =		Fira Sans:pixelsize=14;antialias=true;3
+font-0 =		Roboto Condensed:pixelsize=16;antialias=true;3
 font-1 =		Source Han Sans KR:pixelsize=14;3
-font-2 =		Material Icons:pixelsize=15;5
+font-2 =		Material Icons:pixelsize=15;4
 font-3 =                Wuncon Siji;3
-module-margin =		2
+separator =		" "
+module-margin =		1
 modules-left =		i3 player-prev player-next spotify
-modules-right =		netusage pubip wireguard openvpn wlan bluetooth volume xbacklight system-usb-udev battery date
+modules-right =		netusage pubip wireguard openvpn wlan bluetooth volume xbacklight system-usb-udev battery datecal
 
 [global/wm]
 margin-top = 0
@@ -222,14 +224,12 @@ ramp-capacity-2 = ""
 ramp-capacity-3 = ""
 ramp-capacity-4 = ""
 
-[module/date]
+[module/datecal]
 type = custom/script
-exec = date +'%-d. %B, %H:%M Uhr'
-label = " %output%"
-
+exec = ~/.config/polybar/scripts/datecal.sh
 format-prefix = ""
-interval = 60
-
+interval = 5
+click-left = ~/.config/polybar/scripts/datecal.sh --popup
 
 ;--------
 ; unused

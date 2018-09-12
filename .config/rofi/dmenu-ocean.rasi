@@ -1,7 +1,7 @@
 * {
 	background-color:	#585062;
 	color:			#fbf1f2;
-	height:			42px;
+	height:			40px;
 }
 
 #window {
@@ -18,12 +18,12 @@
 
 #prompt {
 	background-color:	#8b8198;
-	padding:		12px;
+	padding:		9px;
 }
 
 #entry {
 	expand:		false;
-	padding:	11px;
+	padding:	9px;
 	width:		8em;
 }
 
@@ -32,7 +32,7 @@
 }
 
 #element {
-	padding:	10px 12px;
+	padding:	9px 12px;
 	color:		#8b8198;
 }
 
