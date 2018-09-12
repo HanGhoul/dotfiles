@@ -7,11 +7,12 @@
 * rofi
 * feh
 * fonts
+  - ttf-monaco
+  - ttf-roboto
+  - otf-fira-sans / otf-fira-mono
+  - adobe-source-han-sans-*
   - siji
   - ttf-font-awesome-4
   - ttf-material-design-icons
-  - ttf-monaco
-  - otf-fira-sans / otf-fira-mono
-  - adobe-source-han-sans-*
 
-![alt text](https://raw.githubusercontent.com/HanGhoul/dotfiles/master/2018-09-06-215004_1920x1080_scrot.png "scrot")
+![alt text](https://raw.githubusercontent.com/HanGhoul/dotfiles/master/scrot.png "scrot")
